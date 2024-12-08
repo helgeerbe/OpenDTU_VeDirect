@@ -80,7 +80,7 @@ class SurplusPowerClass {
         int16_t _durationNowToAbsorption = 0;               // time from now to start of absorption [minutes]
         int32_t _solarPower = 0;                            // solar panel power [W]
         float _startSoC = 0.0f;                             // start SoC [%] (85.0 = 85%)
-        uint32_t _lastReserveCalcMillis = 0;                // last millis we calculated the battery reserve
+        uint32_t _lastReserveCalcMillis = 0-5*60*1000;      // hint: this value avoids first calculation 5 min after start
         WeightedAVG<float> _avgCellVoltage {20};            // in bulk mode we get better results with higher average [V]
 
 };

@@ -395,7 +395,7 @@ uint16_t SurplusPowerClass::calcBulkMode(uint16_t const requestedPower) {
         // calculation of the power, we want to reserve for the battery
         if (_durationNowToAbsorption > 0) {
             // time left, so we can calculate the battery reserve power
-            _batteryReserve = _batteryCapacity * (0.99f - actSoC / 100.0f) / _durationNowToAbsorption * 60 *
+            _batteryReserve = _batteryCapacity * (0.998f - actSoC / 100.0f) / _durationNowToAbsorption * 60 *
                 (1.0f + _batterySafetyPercent / 100.0f);
             _batteryReserve = std::max(_batteryReserve, 0); // avoid negative values
         } else {
