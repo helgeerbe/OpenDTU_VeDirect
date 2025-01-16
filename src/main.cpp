@@ -40,6 +40,7 @@
 #include <SpiManager.h>
 #include <TaskScheduler.h>
 #include <esp_heap_caps.h>
+#include "ShellyACPlug.h"
 
 void setup()
 {
@@ -182,6 +183,11 @@ void setup()
     SolarCharger.init(scheduler);
     PowerMeter.init(scheduler);
     PowerLimiter.init(scheduler);
+
+    // Initialize Shelly AC-charger
+    MessageOutput.println("Initialize Shelly AC charger interface... ");
+    ShellyACPlug.init(scheduler);
+
     HuaweiCan.init(scheduler);
     Battery.init(scheduler);
 }
