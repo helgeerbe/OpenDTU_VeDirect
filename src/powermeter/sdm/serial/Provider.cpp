@@ -149,6 +149,7 @@ void Provider::pollingLoop()
         // reading takes a "very long" time as each readVal() is a synchronous
         // exchange of serial messages. cache the values and write later to
         // enforce consistent values.
+        float totalPower = 0.0;
         float phase1Power = 0.0;
         float phase2Power = 0.0;
         float phase3Power = 0.0;
@@ -157,6 +158,11 @@ void Provider::pollingLoop()
         float phase3Voltage = 0.0;
         float energyImport = 0.0;
         float energyExport = 0.0;
+
+        auto dataInFlight = DataPointContainer();
+        if (_phases == Phases::Three && readValue(lock, SDM_TOTAL_SYSTEM_POWER, totalPower)) {
+            dataInFlight.add<DataPointLabel::PowerTotal>(totalPower);
+        }
 
         bool success = readValue(lock, SDM_PHASE_1_POWER, phase1Power) &&
             readValue(lock, SDM_PHASE_1_VOLTAGE, phase1Voltage) &&
@@ -172,7 +178,6 @@ void Provider::pollingLoop()
 
         if (!success) { continue; }
 
-        auto dataInFlight = DataPointContainer();
         dataInFlight.add<DataPointLabel::PowerL1>(phase1Power);
         dataInFlight.add<DataPointLabel::VoltageL1>(phase1Voltage);
         dataInFlight.add<DataPointLabel::Import>(energyImport);
