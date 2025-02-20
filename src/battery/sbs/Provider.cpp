@@ -78,7 +78,7 @@ void Provider::onMessage(twai_message_t rx_message)
         }
 
         case 0x640: {
-            _stats->_chargeCurrentLimitation = (this->readSignedInt24(rx_message.data + 3) * 0.001);
+            _stats->setChargeCurrentLimit(this->readSignedInt24(rx_message.data + 3) * 0.001, millis());
             _stats->setDischargeCurrentLimit(this->readSignedInt24(rx_message.data) * 0.001, millis());
 
             if (_verboseLogging) {
